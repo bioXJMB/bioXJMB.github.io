@@ -1,0 +1,9 @@
+# main links
+main:
+  - title: "Courses"
+    url: /Courses/
+  - title: "Projects"
+    url: /Projects/
+  - title: "Publications"
+    url: /Publications/
+ 

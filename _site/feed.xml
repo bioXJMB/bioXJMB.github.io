@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-08-31T19:30:13-04:00</updated><id>http://localhost:4000/</id><title type="html">bioX-UPRM Workspace</title><subtitle>An amazing website.</subtitle><author><name>{&quot;name&quot;=&gt;&quot;&quot;, &quot;avatar&quot;=&gt;&quot;/assets/images/JoseDeDiego.jpg&quot;, &quot;bio&quot;=&gt;&quot;Biomedical research BY students FOR students. HQ | Makerspace @ UPRM&quot;, &quot;location&quot;=&gt;&quot;Mayagüez, PR&quot;, &quot;email&quot;=&gt;nil, &quot;uri&quot;=&gt;nil, &quot;home&quot;=&gt;nil, &quot;bitbucket&quot;=&gt;nil, &quot;codepen&quot;=&gt;nil, &quot;dribbble&quot;=&gt;nil, &quot;flickr&quot;=&gt;nil, &quot;facebook&quot;=&gt;nil, &quot;foursquare&quot;=&gt;nil, &quot;github&quot;=&gt;nil, &quot;gitlab&quot;=&gt;nil, &quot;google_plus&quot;=&gt;nil, &quot;keybase&quot;=&gt;nil, &quot;instagram&quot;=&gt;nil, &quot;lastfm&quot;=&gt;nil, &quot;linkedin&quot;=&gt;nil, &quot;pinterest&quot;=&gt;nil, &quot;soundcloud&quot;=&gt;nil, &quot;stackoverflow&quot;=&gt;nil, &quot;steam&quot;=&gt;nil, &quot;tumblr&quot;=&gt;nil, &quot;twitter&quot;=&gt;nil, &quot;vine&quot;=&gt;nil, &quot;weibo&quot;=&gt;nil, &quot;xing&quot;=&gt;nil, &quot;youtube&quot;=&gt;nil}</name></author><entry><title type="html">Homology-based Essential Gene Discovery (HEGD) Tool. [[Bioinformatics]](/BioOpening/).</title><link href="http://localhost:4000/HEGD/" rel="alternate" type="text/html" title="Homology-based Essential Gene Discovery (HEGD) Tool. [[Bioinformatics]](/BioOpening/)." /><published>2018-06-22T00:00:00-04:00</published><updated>2018-06-22T00:00:00-04:00</updated><id>http://localhost:4000/HEGD</id><content type="html" xml:base="http://localhost:4000/HEGD/">&lt;p&gt;&lt;i class=&quot;fas fa-dna&quot;&gt;&lt;/i&gt; HEGD is a computational tool that uses protein sequences of known essential genes in multiple species to predict gene essentiality in unassessed species.&lt;/p&gt;
+
+&lt;p class=&quot;notice--warning&quot;&gt;Project Status: 
+&lt;strong&gt;In Progress&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;background&quot;&gt;Background.&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Essential genes&lt;/strong&gt; are genes that are thought to be necessary for the survival of an organism. All organisms share groups of &lt;strong&gt;essential genes&lt;/strong&gt; involved in processess associated to DNA Replication, Transcription, Translation, and Metabolism. However, species have developed different sub-sets of essential genes throughout the span of millions of years of evolution. Essential genes are often identified throughout transposon-mediated mutagenesis studies. In these types of studies, transposons - which are mobile genetic elements - are randomly inserted in as many positions in a genome as possible, and cells that survive after a given cell culture period are sequenced. The genes of surviving cells are screened for transposon-mediated mutations: it is expected that essential genes fail to accumulate such mutations, given that cells would not tolerate them if the genes affected were truly essential.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;./assets/images/Transposon_Essential.png&quot; alt=&quot;Alt Text&quot; /&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;Figure 1: Identification of essential genes via genome-wide screen.&lt;/strong&gt; Genomic regions corresponding to the genes hemA, hemC, hemD, and hemB failed to accumulate insertions of transposons - making said genes potentially essential. Source: &lt;a href=&quot;https://en.wikipedia.org/wiki/Essential_gene&quot;&gt;Wikipedia&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;These types of studies require a lot of time an effort. Instead, we suggest implementing a homology-based machine learning model based on previous work &lt;strong&gt;[&lt;a href=&quot;https://www.hindawi.com/journals/bmri/2016/7639397/#B28&quot;&gt;1&lt;/a&gt;]&lt;/strong&gt; for the prediction of species-specific essential genes. &lt;em&gt;This strategy assumes that essential genes are conserved amongst multiple species per kingdom, given their biological relevance.&lt;/em&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;project&quot;&gt;Project.&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Objective:&lt;/strong&gt; Use the protein sequences of known essential genes in multiple species to predict essential genes in a previously unassessed species/strain.&lt;/p&gt;
+
+&lt;p&gt;The figure below only speaks well to trained data scientists. As a novice, you will need to continue reading this document in order to fully understand the whole approach and what your role will be in its implementation.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;./assets/images/HEGD_Concept.png&quot; alt=&quot;Alt Text&quot; /&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;Figure 2: Concept behind HEGD.&lt;/strong&gt; &lt;em&gt;N&lt;/em&gt; number of models are created through reciprocal Blastp alignments between the proteins of &lt;em&gt;N&lt;/em&gt; species with the goal of identifying &lt;strong&gt;orthologs&lt;/strong&gt; - genes in different species that evolved from a common ancestral gene by speciation - of known essential genes. Models are then trained and tested using a Support Vector Machine (a type of supervised machine learning model). Multiple sub-sets of each model are generated through feature selection prior to performing cross validation. Once the models are properly trained and tested, users can then input the proteome of previously unassessed species, and a trained model is selected based on &lt;strong&gt;evolutionary distance&lt;/strong&gt; - a number that defines how closely related a species is to another - with the purpose of classifying protein-coding genes as essential or non-essential. We have highlighted in Cyan the tasks that have been completed by Project Supervisors, and in Purple the tasks that will be implemented by the Students attending this course. To understand the HEGD approach in detail, please continue reading.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Reciprocal Blastp.&lt;/strong&gt;
+&lt;img src=&quot;./assets/images/ReciprocalAlignment.png&quot; alt=&quot;Alt Text&quot; /&gt;
+    &lt;blockquote&gt;
+      &lt;p&gt;&lt;strong&gt;Figure 3: Procedure for reciprocal blastp alignments.&lt;/strong&gt; Given two species, A (Query) and B (Reference), each protein product in Species A (we will refer to each individual protein product as &lt;em&gt;Protein X&lt;/em&gt;) is aligned with blastp to the whole proteome of Species B, and the best hit (alignment) is collected. The protein product pertaining the best hit in Species B is aligned to the whole Proteome of Species A, and the best hit is collected. If the best hit in Species A is equivalent to &lt;em&gt;Protein X&lt;/em&gt;, then the protein hit in Species B is considered an ortholog of &lt;em&gt;Protein X&lt;/em&gt;. By using a database of known essential genes per species, like the &lt;a href=&quot;http://www.essentialgene.org/&quot;&gt;Database of Essential Genes (DEG)&lt;/a&gt;, we can classify orthologs of &lt;em&gt;Protein X&lt;/em&gt; as &lt;strong&gt;essential orthologs&lt;/strong&gt;. These steps are repeated until the whole proteome of Species A is assessed. Multiple reciprocal blastp alignments are performed for every reference species (i.e. species that possess a list of experimentally determined essential genes) - see &lt;em&gt;Model Creation&lt;/em&gt;.&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Result of a single reciprocal blastp alignment (Species A &amp;lt; - &amp;gt; Species B):&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Gene         Essential_Ortholog
+Gene_1       1                       &amp;lt;-Yes
+Gene_2       0                       &amp;lt;-No
+Gene_3       0                       &amp;lt;-No
+...
+Gene_Z       1                       &amp;lt;-Yes
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Model creation.&lt;/strong&gt;
+&lt;img src=&quot;./assets/images/ModelCreation.png&quot; alt=&quot;Alt Text&quot; /&gt;
+    &lt;blockquote&gt;
+      &lt;p&gt;&lt;strong&gt;Figure 4: Creation of a model per reference species based on multiple reciprocal blastp alignments.&lt;/strong&gt; For every species in N Reference species, N-1 reciprocal blastp alignments are performed against the remaining Reference Species in order to identify essential orthologs. This yields datasets with N-1 Binary features, which can be used to train and test machine learning models like Support Vector Machines.&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Result of multiple reciprocal blastp alignments per species model:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Model 1 (Species 1)   |     Species 2    Species 3      ...     Species N
+Gene_1                |         1           0                       1
+Gene_2                |         0           0                       0
+...                   |        ...         ...                     ...
+Gene_Z                |         1           1                       1
+
+Model 2 (Species 2)   |     Species 1    Species 3      ...     Species N
+Gene_1                |         1           1                       1
+Gene_2                |         0           0                       1
+...                   |        ...         ...                     ...
+Gene_Z                |         1           1                       0
+
+.
+.
+.
+
+Model N (Species N)   |     Species 1    Species 2      ...      Species N-1
+Gene_1                |         0           1                       1
+Gene_2                |         0           0                       0
+...                   |        ...         ...                     ...
+Gene_Z                |         1           0                       0
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;community-tasks&quot;&gt;Community tasks.&lt;/h2&gt;
+
+&lt;p&gt;This section contains the theoretical knowledge pertaining tasks that each work group will be completing. All Python code involving said tasks will be discussed and implemented within bioXJMB’s Slack work group (see below).&lt;/p&gt;
+
+&lt;h3 id=&quot;group-1-evolutionary-distance-of-two-species-by-proteome-comparison&quot;&gt;Group 1: Evolutionary distance of two species by proteome comparison.&lt;/h3&gt;
+&lt;p&gt;In order to classify genes of species that have no experimentally determined essential genes, a single trained model from the N reference models available needs to be selected. The question then remains as to which. We aim to use evolutionary distance as a metric to select for said trained model, as classification accuracy is expected to increase as evolutionary distance between species decreases.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;./assets/images/ModelSelection.png&quot; alt=&quot;Alt Text&quot; /&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;Figure 5: Model selection based on evolutionary distance.&lt;/strong&gt; Species Q is a species that does not have a set of experimentally determined essential genes. One of the trained models from N reference models must be chosen in order to classify the genes of Species Q as essential or non-essential. The model with the shortest evolutionary distance between Species Q and each trained reference model (Model 3, in this case) is chosen.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Calculating evolutionary distance.&lt;/strong&gt;
+    &lt;blockquote&gt;
+      &lt;p&gt;Many methods have been developed to calculate evolutionary distance, but we are only interested in implementing a computationally inexpensive way to compare the relatedness between all protein products found in two Species, A and B. &lt;strong&gt;To acheive this, we can treat amino acid sequences as strings of length k, or &lt;em&gt;k-strings&lt;/em&gt;, where each protein product is constructed from multiple k-strings&lt;/strong&gt; &lt;strong&gt;[&lt;a href=&quot;https://link.springer.com/article/10.1007%2Fs00239-003-2493-7&quot;&gt;2&lt;/a&gt;]&lt;/strong&gt;.&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;To explain how this notation is pertinent to estimating relatedness of the proteome of two species, consider the following:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Let k = length of k-string
+
+Given that there are 20 amino acids found in most Earth-bound species, we can assume that there are 
+20^k possible amino acid combinations for any given k-string.
+
+Example: If k = 2, 20^k = 20^2 = 400, and so there are 400 possible amino acid combinations for any 
+given k-string.
+i.e.     amino acids = [&quot;A&quot;,&quot;C&quot;,&quot;D&quot;,&quot;E&quot;,&quot;F&quot;,&quot;G&quot;,&quot;H&quot;,&quot;I&quot;, &quot;L&quot;,&quot;K&quot;,&quot;M&quot;,&quot;N&quot;,&quot;P&quot;,&quot;Q&quot;,&quot;R&quot;,&quot;S&quot;,&quot;T&quot;,&quot;V&quot;,&quot;W&quot;,&quot;Y&quot;]
+         k-string combinations = [&quot;AA&quot;,&quot;AC&quot;,&quot;AD&quot;,&quot;AE&quot;,&quot;AF&quot;,&quot;AG&quot;,&quot;AH&quot;,&quot;AI&quot;, &quot;AL&quot;,&quot;AK&quot;,&quot;AM&quot;,&quot;AN&quot;,&quot;AP&quot;,&quot;AQ&quot;,
+         &quot;AR&quot;,&quot;AS&quot;,&quot;AT&quot;,&quot;AV&quot;,&quot;AW&quot;,&quot;AY&quot;, ... , &quot;YA&quot;,&quot;YC&quot;,&quot;YD&quot;,&quot;YE&quot;,&quot;YF&quot;,&quot;YG&quot;,&quot;YH&quot;,&quot;YI&quot;, &quot;YL&quot;,&quot;YK&quot;,&quot;YM&quot;,
+         &quot;YN&quot;,&quot;YP&quot;,&quot;YQ&quot;,&quot;YR&quot;,&quot;YS&quot;,&quot;YT&quot;,&quot;YV&quot;,&quot;YW&quot;,&quot;YY&quot;] &amp;lt;- 400 amino acid combinations
+         
+By fragmenting individual proteins into k-strings, we can search for and report all possible amino acid 
+k-string combinations within the proteome of a species. 
+
+Let Protein X = &quot;MYKCYK&quot;, and L = length of Protein X
+
+There are (L - K + 1) possible k-string fragmentation patterns of length k in Protein X.
+i.e. if k = 2, 
+     Protein X Fragments = [&quot;MY&quot;,&quot;YK&quot;,&quot;KC&quot;,&quot;CY&quot;,&quot;YK&quot;] &amp;lt;- (L-K+1) = (6-2+1) = 5 fragmentation patterns
+     
+     - The frecuency of the k-string &quot;AA&quot; in Protein X Fragments is 0.
+     - The frecuency of the k-string &quot;YK&quot; in Protein X Fragments is 2.
+
+The frecuency of each possible amino acid k-string combination in the proteome of a species can be used to 
+calculate probabilities of k-string occurrence. Said probabilities can be implemented in order to calculate 
+k-string correlations between two species and, ultimately, evolutionary distance. 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;./assets/images/Probab_kstring.png&quot; alt=&quot;Alt Text&quot; /&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;Figure 6: Probability of finding a particular k-string in a given protein sequence.&lt;/strong&gt; The probability of finding a particular k-string (α&lt;sub&gt;1&lt;/sub&gt;α&lt;sub&gt;2&lt;/sub&gt;…α&lt;sub&gt;k&lt;/sub&gt;, where α = amino acid) in a given protein sequence - say Protein X - results from the frecuency of said k-string in Protein X, divided by the amount of possible k-string fragmentation patterns of length k in Protein X (i.e. Length of Protein X - k + 1). Each individual probability per protein can be added up to yield the probability of finding a particular k-string in &lt;em&gt;ANY&lt;/em&gt; given protein sequence of the species in question.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;img src=&quot;./assets/images/componentFormula.png&quot; alt=&quot;Alt Text&quot; /&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;Figure 7: Emphasizing selective diversification of protein sequences.&lt;/strong&gt; Neutral mutations (mutations that have no impact on biological fitness) lead to randomness in the k-string composition of proteins. In order to emphasize the selective diversification of sequence composition, we can subtract a random background, in the form of a predicted or inferred probability (P&lt;sub&gt;0&lt;/sub&gt;), from the probability obtained via k-string frecuency assessment.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;img src=&quot;./assets/images/PredictedProbab_Kstring.png&quot; alt=&quot;Alt Text&quot; /&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;Figure 8: Predicted Markovian Probability (P&lt;sup&gt;0&lt;/sup&gt;) of finding a particular k-string in a given protein sequence.&lt;/strong&gt; A widely used Markov model &lt;strong&gt;[&lt;a href=&quot;https://www.ncbi.nlm.nih.gov/pubmed/3078230&quot;&gt;3&lt;/a&gt;]&lt;/strong&gt; can calculate a predicted probability that accounts for the random background discussed in the description of &lt;strong&gt;Figure 7&lt;/strong&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;img src=&quot;./assets/images/CompAB.png&quot; alt=&quot;Alt Text&quot; /&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;Figure 9: Representative vectors for Species A and B.&lt;/strong&gt; Each representative vector possesses a Y-dimensional space, where Y=20&lt;sup&gt;k&lt;/sup&gt;, of composition vectors. Representative vectors A and B store Y results (i.e. one for each possible k-string) from the formula portrayed in &lt;strong&gt;Figure 7&lt;/strong&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;img src=&quot;./assets/images/CorrelationA_B.png&quot; alt=&quot;Alt Text&quot; /&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;Figure 10: Correlation of Species A and B, defined by the cosine function of the angle between the two representative vectors, A &amp;amp; B.&lt;/strong&gt; The correlation of Species A and B actually refers to their proteomic distance, which resides in the interval (-1,1).&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;img src=&quot;./assets/images/DistanceA_B.png&quot; alt=&quot;Alt Text&quot; /&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;Figure 11: Normalization of correlation between Species A and Species B yields evolutionary distance.&lt;/strong&gt; Because the cosine function defining the correlation of Species A and B results in values between -1 and 1, we can use this formula to normalize values to the interval (0,1).&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;group-2-training-and-testing-a-support-vector-machine-for-the-classification-of-genes-as-essential-or-non-essential&quot;&gt;Group 2: Training and testing a Support Vector Machine for the classification of genes as essential or non essential.&lt;/h3&gt;
+
+&lt;p&gt;Support Vector Machines (SVM) are one of the most widely used machine learning approaches when it comes to Biological Data. Each data point in an SVM is viewed as a p-dimensional vector, where such points are expected to be able to linearly separate with a (p-1)-dimensional hyperplane. Such a hyperplane is referred to as the optimal hyperplane, and decision boundaries are generated with the help of support vectors - vectors that greatly contribute to the identification of an optimal hyperplane.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;./assets/images/SVM_Concept.png&quot; alt=&quot;Alt Text&quot; /&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;Figure 12: Training VS Classifying/Testing in a two-dimensional SVM.&lt;/strong&gt; SVM models are first trained using a training dataset that contains two features (value columns) or more and a class label (+ or -). Each sample (row) contributes to the identification of an optimal hyperplane, which creates the decision boundaries that dictate classification results. Trained models can be tested using testing datasets that share the same features, but not the same samples. Testing sets also possess known labels. When testing trained models, each testing sample is assigned a label based on the decision boundaries established throughout training; assigned labels are compared to known labels and an accuracy score is used to rank the performance of the model. Once a satisfactory threshold is reached, trained models can be used to infer the labels of unclassified datasets.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;We will train Support Vector Machines using multiple model-subsets derived from the N models created from each reference species, and we will test each model sub-set through cross-validation in order to keep the most accurate one (see &lt;strong&gt;Figure 13&lt;/strong&gt; below).&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Feature Ranking.&lt;/strong&gt;
+&lt;img src=&quot;./assets/images/FeatureRanking.png&quot; alt=&quot;Alt Text&quot; /&gt;
+    &lt;blockquote&gt;
+      &lt;p&gt;&lt;strong&gt;Figure 13: Using scoring methods to rank features while training and testing.&lt;/strong&gt; While datasets with N-1 features resulting from multiple reciprocal blastp alignments can be used to train and test machine learning models (see &lt;strong&gt;Figure 4&lt;/strong&gt;), scoring functions can be applied to rank features and create model sub-sets that are in turn trained and tested in order to save the model sub-set with the highest classification accuracy.&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;./assets/images/F_Score.png&quot; alt=&quot;Alt Text&quot; /&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;Figure 14: F score function.&lt;/strong&gt; Given that our models contain N-1 binary features, we can use the F score function &lt;strong&gt;[&lt;a href=&quot;https://www.csie.ntu.edu.tw/~cjlin/papers/features.pdf&quot;&gt;4&lt;/a&gt;]&lt;/strong&gt; to rank features based on their ability to tell a positive sample from a negative sample. &lt;strong&gt;x&lt;sub&gt;i&lt;/sub&gt;&lt;/strong&gt; , &lt;strong&gt;x&lt;sub&gt;i&lt;/sub&gt;&lt;sup&gt;(+)&lt;/sup&gt;&lt;/strong&gt;, and &lt;strong&gt;x&lt;sub&gt;i&lt;/sub&gt;&lt;sup&gt;(-)&lt;/sup&gt;&lt;/strong&gt; are the mean of the i&lt;sub&gt;th&lt;/sub&gt; feature of the total, positive, and negative samples respectively. x&lt;sub&gt;k,i&lt;/sub&gt;&lt;sup&gt;(+)&lt;/sup&gt; is the i&lt;sub&gt;th&lt;/sub&gt; feature of the k&lt;sub&gt;th&lt;/sub&gt; postive sample, while x&lt;sub&gt;k,i&lt;/sub&gt;&lt;sup&gt;(-)&lt;/sup&gt; is the i&lt;sub&gt;th&lt;/sub&gt; feature of the k&lt;sub&gt;th&lt;/sub&gt; negative sample.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Model training.&lt;/strong&gt;
+    &lt;blockquote&gt;
+      &lt;p&gt;We mentioned earlier that data points of a training set are often expected to be linearly separable. However, this is not always the case. In order to properly separate datapoints, we can implement kernel functions with the purpose of mapping the original finite-dimensional space into a higher-dimensional space. We will be implementing a Gaussian kernel function in &lt;a href=&quot;http://scikit-learn.org/stable/modules/svm.html&quot;&gt;Sci-Kit Learn&lt;/a&gt; (a ML Library in Python).&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Model testing.&lt;/strong&gt;
+    &lt;blockquote&gt;
+      &lt;p&gt;We will be performing 10-fold cross-validation in order to test each one of our classification models.&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;./assets/images/CrossValidation.png&quot; alt=&quot;Alt Text&quot; /&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;Figure 15: Schematic of 10-fold cross-validation.&lt;/strong&gt; The training data is randomly sorted and divided into 10 equal portions, where 9 portions are used to train the classification model, and 1 portion is used as a testing set. The process is repeated until all portions are used as testing sets. 10-fold cross-validation follows the Pareto principle, which states that in most events at least 80% of the effects come from 20% of the causes.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;all-work-will-be-carried-out-and-monitored-through-the-bioxjmb-slack-group&quot;&gt;&lt;strong&gt;All work will be carried out and monitored through the bioXJMB Slack group.&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://join.slack.com/t/bioxjmb/shared_invite/enQtNDIwNDM0MDA2NzkwLTZjMWFkYmI5YjBjZmVlYmM0MDAzNzYyMGUyNDAwNmNjN2JjYzVlMjRiNzE1NGNhYTMzOWY5MzU2MGYwNmFhYjE&quot; class=&quot;btn btn--info btn--large&quot;&gt;&lt;i class=&quot;fab fa-slack&quot;&gt;&lt;/i&gt; @bioXJMB&lt;/a&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+&lt;h3 id=&quot;references&quot;&gt;References:&lt;/h3&gt;
+&lt;p&gt;[&lt;a href=&quot;https://www.hindawi.com/journals/bmri/2016/7639397/#B28&quot;&gt;1&lt;/a&gt;] Hong-Li Hua, et al. (2016). An Approach for Predicting Essential Genes Using Multiple Homology Mapping and Machine Learning Algorithms. &lt;em&gt;BioMed Research International&lt;/em&gt;. Volume 2016, Article ID 7639397.&lt;/p&gt;
+
+&lt;p&gt;[&lt;a href=&quot;https://link.springer.com/article/10.1007%2Fs00239-003-2493-7&quot;&gt;2&lt;/a&gt;] Qi Ji et al. (2003). Whole Proteome Prokaryote Phylogeny Without Sequence Alignment: A K-String Composition Approach. &lt;em&gt;J Mol Evol&lt;/em&gt;. 58:1–11.&lt;/p&gt;
+
+&lt;p&gt;[&lt;a href=&quot;https://www.ncbi.nlm.nih.gov/pubmed/3078230&quot;&gt;3&lt;/a&gt;] Brendel V, et al. (1986) Linguistics of nucleotide sequences: Morphology and comparison of vocabularies. J Biomol Struct Dyn 4:11–21&lt;/p&gt;
+
+&lt;p&gt;[&lt;a href=&quot;https://www.csie.ntu.edu.tw/~cjlin/papers/features.pdf&quot;&gt;4&lt;/a&gt;] Y.-W. Chen &amp;amp; C.-J Lin. (2006). Combining SVMs with various feature selection strategies. &lt;em&gt;Studies in Fuzziness and Soft Computing&lt;/em&gt;. 207:315–324.&lt;/p&gt;
+
+&lt;h4 id=&quot;project-coordinator&quot;&gt;Project Coordinator:&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/CharlesSanfiorenzo/Bioinformatics&quot;&gt;Charles Sanfiorenzo&lt;/a&gt; - csanfior@caltech.edu&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>{&quot;name&quot;=&gt;&quot;&quot;, &quot;avatar&quot;=&gt;&quot;/assets/images/JoseDeDiego.jpg&quot;, &quot;bio&quot;=&gt;&quot;Biomedical research BY students FOR students. HQ | Makerspace @ UPRM&quot;, &quot;location&quot;=&gt;&quot;Mayagüez, PR&quot;, &quot;email&quot;=&gt;nil, &quot;uri&quot;=&gt;nil, &quot;home&quot;=&gt;nil, &quot;bitbucket&quot;=&gt;nil, &quot;codepen&quot;=&gt;nil, &quot;dribbble&quot;=&gt;nil, &quot;flickr&quot;=&gt;nil, &quot;facebook&quot;=&gt;nil, &quot;foursquare&quot;=&gt;nil, &quot;github&quot;=&gt;nil, &quot;gitlab&quot;=&gt;nil, &quot;google_plus&quot;=&gt;nil, &quot;keybase&quot;=&gt;nil, &quot;instagram&quot;=&gt;nil, &quot;lastfm&quot;=&gt;nil, &quot;linkedin&quot;=&gt;nil, &quot;pinterest&quot;=&gt;nil, &quot;soundcloud&quot;=&gt;nil, &quot;stackoverflow&quot;=&gt;nil, &quot;steam&quot;=&gt;nil, &quot;tumblr&quot;=&gt;nil, &quot;twitter&quot;=&gt;nil, &quot;vine&quot;=&gt;nil, &quot;weibo&quot;=&gt;nil, &quot;xing&quot;=&gt;nil, &quot;youtube&quot;=&gt;nil}</name></author><summary type="html">HEGD is a computational tool that uses protein sequences of known essential genes in multiple species to predict gene essentiality in unassessed species.</summary></entry></feed>
