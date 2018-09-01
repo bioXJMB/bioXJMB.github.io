@@ -53,3 +53,5 @@ Then, simply download and unzip [this directory](https://github.com/CharlesSanfi
 - Metagenomics and Metabolomics
 - Modeling Biological Systems at different scales
 
+#### Course Coordinator: 
+- [Charles Sanfiorenzo](https://github.com/CharlesSanfiorenzo/Bioinformatics) - csanfior@caltech.edu
