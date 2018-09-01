@@ -9,11 +9,11 @@ locale                   : "en-US"
 title                    : "bioX-UPRM Workspace"
 title_separator          : "-"
 name                     : "bioX-UPRM Workspace"
-description              : "An amazing website."
+description              : "Welcome to the bioX Workspace, where bioX hosts a wide variety of courses & projects oriented towards biomedical research. All courses and projects are designed BY students FOR students."
 url                      : "https://bioxjmb.github.io"
 baseurl                  : 
 repository               : "bioXJMB/bioXJMB.github.io"
-teaser                   : "assets/images/android-chrome-512x512.png"
+teaser                   : "assets/images/bioXLogo.png"
 # breadcrumbs            : false # true, false (default)
 words_per_minute         : 200
 comments:
