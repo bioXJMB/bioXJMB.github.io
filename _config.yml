@@ -10,10 +10,10 @@ title                    : "bioX-UPRM Workspace"
 title_separator          : "-"
 name                     : "bioX-UPRM Workspace"
 description              : "An amazing website."
-url                      : "https://bioxjmb.github.io/"
-baseurl                  : # the subpath of your site, e.g. "/blog"
+url                      : "https://bioxjmb.github.io"
+baseurl                  : 
 repository               : "bioXJMB/bioXJMB.github.io"
-teaser                   : # path of fallback teaser image, e.g. "/assets/images/500x300.png"
+teaser                   : "assets/images/android-chrome-512x512.png"
 # breadcrumbs            : false # true, false (default)
 words_per_minute         : 200
 comments:
@@ -255,7 +255,7 @@ defaults:
     values:
       layout: single
       author_profile: true
-      read_time: true
+      read_time: false
       comments: # true
       share: true
       related: false
